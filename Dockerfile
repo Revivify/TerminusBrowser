@@ -1,4 +1,4 @@
-FROM python as base
+FROM python:slim-buster as base
 
 FROM base as builder
 
@@ -9,10 +9,11 @@ COPY requirements.txt /requirements.txt
 
 RUN pip install --prefix=/install -r /requirements.txt
 
-FROM base 
+FROM base
 
 COPY --from=builder /install /usr/local/
-COPY . /app
+COPY ./src /app/src/
+COPY terminus_browser.py /app/
 
 WORKDIR /app
 
